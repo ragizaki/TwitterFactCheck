@@ -1,17 +1,47 @@
 /// <reference types="chrome" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import Logo from "./Logo";
-import "./App.css";
+import { Button, useToast } from "@chakra-ui/react";
+import { factCheckTweet, getToastStatus } from "./openai";
+import { useState } from "react";
 
-function App() {
+interface AppProps {
+  tweetText: string;
+}
+
+function App({ tweetText }: AppProps) {
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const toast = useToast();
+  const toastId = "fact-check-toast";
+
+  const handleButtonClick = async () => {
+    setIsButtonLoading(true);
+    const [response, category] = await factCheckTweet(tweetText);
+    setIsButtonLoading(false);
+
+    if (!toast.isActive(toastId)) {
+      toast({
+        id: toastId,
+        status: getToastStatus(category),
+        title: `This tweet is ${category}`,
+        description: response,
+        position: "top-right",
+        isClosable: true,
+        duration: 10000,
+      });
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <Logo className="App-logo" id="App-logo" title="React logo" />
-        <p>Hello, World!</p>
-        <p>I'm a Chrome Extension Content Script!</p>
-      </header>
+      <Button
+        colorScheme="blue"
+        onClick={handleButtonClick}
+        isLoading={isButtonLoading}
+        loadingText="Fact-Checking..."
+      >
+        Fact-Check
+      </Button>
     </div>
   );
 }

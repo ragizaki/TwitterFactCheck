@@ -1,29 +1,56 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "./main.css";
 import App from "./App";
+import { ChakraProvider } from "@chakra-ui/react";
 
-const body = document.querySelector("body");
+function init() {
+  const app = document.createElement("div");
+  app.id = "root";
 
-const app = document.createElement("div");
+  function appendFactCheckButton() {
+    setTimeout(() => {
+      const parentDiv = document.querySelector(
+        ".css-1dbjc4n.r-k4xj1c.r-18u37iz.r-1wtj0ep"
+      );
+      const parentChild = parentDiv?.children[1] as HTMLDivElement;
+      parentChild.style.alignSelf = "flex-end";
 
-app.id = "root";
+      const tweet = document.querySelector(
+        '[data-testid="tweetText"]'
+      ) as HTMLDivElement;
 
-// Make sure the element that you want to mount the app to has loaded. You can
-// also use `append` or insert the app using another method:
-// https://developer.mozilla.org/en-US/docs/Web/API/Element#methods
-//
-// Also control when the content script is injected from the manifest.json:
-// https://developer.chrome.com/docs/extensions/mv3/content_scripts/#run_time
-if (body) {
-  body.prepend(app);
+      parentDiv?.insertBefore(app, parentChild);
+
+      const container = document.getElementById("root");
+      const root = createRoot(container!);
+
+      root.render(
+        <ChakraProvider>
+          <React.StrictMode>
+            <App tweetText={tweet.innerText} />
+          </React.StrictMode>
+        </ChakraProvider>
+      );
+    }, 2000);
+  }
+
+  appendFactCheckButton();
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length > 0) {
+        appendFactCheckButton();
+      }
+    });
+  });
+
+  observer.observe(
+    document.querySelector(".css-1dbjc4n.r-18u37iz.r-15zivkp") as Node,
+    {
+      subtree: false,
+      childList: true,
+    }
+  );
 }
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+init();

@@ -5,13 +5,14 @@
   "action": {
     "default_title": "Popup",
     "default_popup": "index.html",
-    "default_icon": "logo192.png"
+    "default_icon": "logo.png"
   },
   "icons": {},
   "content_scripts": [
     {
-      "matches": ["https://blank.org/*"],
+      "matches": ["https://twitter.com/*/status/*"],
       "js": ["content-script/src/main.tsx"],
+      "run_at": "document_end",
       "media": []
     }
   ]
