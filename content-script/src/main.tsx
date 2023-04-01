@@ -44,13 +44,10 @@ function init() {
     });
   });
 
-  observer.observe(
-    document.querySelector(".css-1dbjc4n.r-18u37iz.r-15zivkp") as Node,
-    {
-      subtree: false,
-      childList: true,
-    }
-  );
+  observer.observe(app, {
+    subtree: false,
+    childList: true,
+  });
 }
 
 init();
