@@ -1,5 +1,4 @@
 # Insight - Twitter Fact-Checker
-<hr />
 Fact-Check tweets instantly with Insight
 
 ## Introduction
