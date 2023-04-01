@@ -39,6 +39,7 @@ function App({ tweetText }: AppProps) {
         onClick={handleButtonClick}
         isLoading={isButtonLoading}
         loadingText="Fact-Checking..."
+        spinnerPlacement="end"
       >
         Fact-Check
       </Button>
