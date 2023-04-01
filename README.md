@@ -1,8 +1,25 @@
-# React TypeScript Chrome Extension
+# Insight - Twitter Fact-Checker
+Fact-Check tweets instantly with Insight
 
-This repository includes examples of how to set up a Chrome Extension with React and TypeScript.
+## Introduction
+Insight is a chrome extension that allows users to fact-check tweets in real-time. The extension has an easy-to-use interface. A fact-check button is rendered when a user interacts with a tweet, and clicking the button fact-checks the tweet content using the <strong>OpenAI GPT-3.5 API.</strong>
 
-This project uses [Vite](https://vitejs.dev/) and [crxjs](https://crxjs.dev/vite-plugin) to build the extension.
+## Tech Stack
+- React (Vite)
+- Chrome Extension Tools
+- GPT 3.5
+- TypeScript
+- Chakra UI
+
+## Features
+The tool categorizes the tweet into 1 of three categories
+- True
+- False
+- Unverifiable
+There are plans to add more nuanced categories, and to support tweets with images with the release of GPT-4.
+
+## Demo
+https://user-images.githubusercontent.com/43770239/229266635-d05483b0-2933-47ad-b722-d5b91a33654e.mp4
 
 ## Setup
 
@@ -12,13 +29,11 @@ git clone git@github.com:yosevu/react-content-script.git
 ```
 
 ### Install dependencies
-
 ```sh
 yarn
 ```
 
 ### Build extension
-
 ```
 yarn build
 ```
@@ -31,17 +46,3 @@ yarn build
 1. Go to the `react-content-script` directory and select the `dist` directory to load the extension
 1. Navigate to https://blank.org/ to see the Content Script React app
 1. Go to extensions and click "React TypeScript Chrome Extension" to see the Popup React app
-
-## [Popup](https://developer.chrome.com/docs/extensions/mv3/user_interface/#popup)
-
-The popup source code is at the root directory.
-
-## [Content Script](https://developer.chrome.com/docs/extensions/mv3/content_scripts/)
-
-The content script source code is in the `content-script` directory.
-
-<img width="895" alt="Screen Shot 2022-06-18 at 10 04 04 AM" src="https://user-images.githubusercontent.com/16216104/174416528-6e5ad272-5faa-41d4-a717-c210ed4924b0.png">
-
-## Background
-
-This repository was originally part of [How to inject a React app into a Chrome Extension as a Content Script](https://medium.com/@yosevu/how-to-inject-a-react-app-into-a-chrome-extension-as-a-content-script-3a038f611067). 
