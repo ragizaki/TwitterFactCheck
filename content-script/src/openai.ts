@@ -24,7 +24,6 @@ export const factCheckTweet = async (
 
   const data = await res.json();
   const openaiResponse = data.choices[0].message.content;
-  console.log("initial response", openaiResponse);
   const category = getFirstWord(openaiResponse).toLowerCase();
   const parsedOpenaiResponse = removeFirstWord(openaiResponse);
   return [parsedOpenaiResponse, category];
