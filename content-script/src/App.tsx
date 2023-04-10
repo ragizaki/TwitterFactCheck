@@ -1,50 +1,45 @@
 /// <reference types="chrome" />
 /// <reference types="vite-plugin-svgr/client" />
 
-import { Button, useToast } from "@chakra-ui/react";
-import { factCheckTweet, getToastStatus } from "./openai";
+import { Button } from "@chakra-ui/react";
+import { factCheckTweet } from "./openai";
 import { useState } from "react";
+import TruthButton from "./TruthButton";
 
 interface AppProps {
   tweetText: string;
 }
 
-function App({ tweetText }: AppProps) {
+export default function App({ tweetText }: AppProps) {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const toast = useToast();
-  const toastId = "fact-check-toast";
+  const [isTweetFactChecked, setIsTweetFactChecked] = useState(false);
+  const [openaiResponse, setOpenaiResponse] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleButtonClick = async () => {
     setIsButtonLoading(true);
     const [response, category] = await factCheckTweet(tweetText);
+    setOpenaiResponse(response);
+    setCategory(category);
     setIsButtonLoading(false);
-
-    if (!toast.isActive(toastId)) {
-      toast({
-        id: toastId,
-        status: getToastStatus(category),
-        title: `This tweet is ${category}`,
-        description: response,
-        position: "top-right",
-        isClosable: true,
-        duration: 10000,
-      });
-    }
+    setIsTweetFactChecked(true);
   };
 
   return (
     <div className="App">
-      <Button
-        colorScheme="blue"
-        onClick={handleButtonClick}
-        isLoading={isButtonLoading}
-        loadingText="Fact-Checking..."
-        spinnerPlacement="end"
-      >
-        Fact-Check
-      </Button>
+      {isTweetFactChecked ? (
+        <TruthButton category={category} openaiResponse={openaiResponse} />
+      ) : (
+        <Button
+          colorScheme="blue"
+          onClick={handleButtonClick}
+          isLoading={isButtonLoading}
+          loadingText="Fact-Checking..."
+          spinnerPlacement="end"
+        >
+          Fact-Check
+        </Button>
+      )}
     </div>
   );
 }
-
-export default App;
