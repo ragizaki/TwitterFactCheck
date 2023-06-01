@@ -29,6 +29,12 @@ export const factCheckTweet = async (
   return [parsedOpenaiResponse, category];
 };
 
+export const factCheckLangchain = async () => {
+  const res = await fetch("https://localhost:3000/api");
+  const { data, truthCategory } = await res.json();
+  return [data, truthCategory];
+};
+
 const getFirstWord = (text: string): string => {
   const words = text.split(" ");
   return words[0];
